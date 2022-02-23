@@ -15,7 +15,7 @@ from keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate,
 def multi_unet_model(n_classes=6, IMG_HEIGHT=256, IMG_WIDTH=256, IMG_CHANNELS=1):
 #Build the model
     inputs = Input((IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS))
-    #s = Lambda(lambda x: x / 255)(inputs)   #No need for this if we normalize our inputs beforehand
+    
     s = inputs
 
     #Contraction path
@@ -71,10 +71,5 @@ def multi_unet_model(n_classes=6, IMG_HEIGHT=256, IMG_WIDTH=256, IMG_CHANNELS=1)
     outputs = Conv2D(n_classes, (1, 1), activation='softmax')(c9)
      
     model = Model(inputs=[inputs], outputs=[outputs])
-    
-    #NOTE: Compile the model in the main program to make it easy to test with various loss functions
-    # model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    
-    # model.summary()
     
     return model
